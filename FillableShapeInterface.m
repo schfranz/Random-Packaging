@@ -13,7 +13,7 @@ classdef (Abstract) FillableShapeInterface < ShapeInterface
     %%VARIABLES
     %%PUBLIC%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     properties
-        nFillShapesExp = 10; %number of fill shapes user expects to place
+        nFillShapesExp = 10; %number of FillShapes user expects to place
     end
     
     %%PROTECTED%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
