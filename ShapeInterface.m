@@ -20,7 +20,7 @@ classdef (Abstract) ShapeInterface < handle
     end
     
     %%PROTECTED%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    properties (SetAccess = protected) % can't be set by user
+    properties (SetAccess = protected)
         volume  %volume enclosed by the shape       
         shape   %shape type (cube, sphere, cylinder)
     end
