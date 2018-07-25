@@ -1,3 +1,6 @@
+%TODO:
+% - write constructor with radius
+
 classdef Sphere < ShapeInterface
     %inherited properties:
         %volume     %volume of sphere       %protected
@@ -8,22 +11,27 @@ classdef Sphere < ShapeInterface
         
     properties (SetObservable)
         radius  %radius of sphere
+        diameter  %diameter of sphere
     end
     
     methods
         %construtor method
-        function obj = Sphere(width, center)
+        function obj = Sphere(diameter, center)
             obj.shape = 'sphere';
-            addlistener(obj, 'width', 'PostSet', @Sphere.updateProps);
             addlistener(obj, 'height', 'PostSet', @Sphere.updateProps);
+            addlistener(obj, 'width', 'PostSet', @Sphere.updateProps);
+            addlistener(obj, 'depth', 'PostSet', @Sphere.updateProps);
             addlistener(obj, 'radius', 'PostSet', @Sphere.updateProps);
+            addlistener(obj, 'diameter', 'PostSet', @Sphere.updateProps);
             %addlistener(obj, 'center', 'PostSet', @Sphere.updateLocation);
             switch nargin
                 case 0 %no argument constructor
                 otherwise %set basic properties of sphere
-                    obj.width = width;
-                    obj.height = obj.width;
-                    obj.radius = obj.width/2;
+                    obj.diameter = diameter;
+                    obj.height = obj.diameter;
+                    obj.width = obj.diameter;
+                    obj.depth = obj.diameter;
+                    obj.radius = obj.diameter/2;
                     obj.volume = 4/3 * pi * obj.radius^3;
             end
             if (nargin >= 2) %sphere centered around provided origin
@@ -85,17 +93,35 @@ classdef Sphere < ShapeInterface
         function updateProps(~, eventData) %first argument is class info?
             obj = eventData.AffectedObject;
             switch eventData.Source.Name
-                case 'width'
-                    obj.height = obj.width;
-                    obj.radius = obj.width/2;
-                    obj.volume = 4/3 * pi * obj.radius^3;
                 case 'height'
                     obj.width = obj.height;
+                    obj.depth = obj.height;
+                    obj.radius = obj.height/2;
+                    obj.diameter = obj.height;
+                    obj.volume = 4/3 * pi * obj.radius^3;
+                case 'width'
+                    obj.height = obj.width;
+                    obj.depth = obj.width;
                     obj.radius = obj.width/2;
+                    obj.diameter = obj.width;
+                    obj.volume = 4/3 * pi * obj.radius^3;
+                case 'depth'
+                    obj.height = obj.depth;
+                    obj.width = obj.depth;
+                    obj.radius = obj.depth/2;
+                    obj.diameter = obj.depth;
                     obj.volume = 4/3 * pi * obj.radius^3;
                 case 'radius'
-                    obj.width = obj.radius*2;
-                    obj.height = obj.width;
+                    obj.height = obj.radius*2;
+                    obj.width = obj.height;
+                    obj.depth = obj.height;
+                    obj.diameter = obj.height;
+                    obj.volume = 4/3 * pi * obj.radius^3;
+                case 'diameter'
+                    obj.height = obj.diameter;
+                    obj.width = obj.diameter;
+                    obj.depth = obj.diameter;
+                    obj.radius = obj.diameter/2;
                     obj.volume = 4/3 * pi * obj.radius^3;
             end
         end
