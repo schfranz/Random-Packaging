@@ -5,8 +5,9 @@ classdef Sphere < ShapeInterface
     %inherited properties:
         %volume     %volume of sphere       %protected
         %shape      %sphere                 %protected
-        %width      %diameter
         %height     %diameter
+        %width      %diameter
+        %depth      %diameter
         %center     %center coordinates     %default: [0,0,0]
         
     properties (SetObservable)
