@@ -36,11 +36,44 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
     %%
     %%FUNCTIONS
     %%CONSTRUCTOR%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    
+    methods
+        %constructor method
+        function obj = FillableBox(varargin)
+            obj = obj@Box(varargin{:}); %call to superclass constructor
+            
+            if (nargin > 3) %check 3
+                error(obj.errMessTooManyInputs)
+            end
+            
+            switch nargin
+                case num2cell(1:3)
+                    obj.freeVolume = obj.volume; %check 
+            end
+            %listeners
+            addlistener(obj, 'allowOverlap', 'PostSet', @cylCanister.letOverlap); %check
+        end
+        
+    end
     
     methods
+        %add a shape to FillableBox
         function addShape(obj)
-            
+            checkIfValidFillShape(obj, fillObj) %compares fillObj to list of allowed shapes
+            switch fillObj.shape
+                case 'sphere'
+                    %check if sphere dimensions are too large
+                    if (fillObj.width > obj.width || fillObj.height > obj.height)
+                        error(obj.errMessLargeFillShape)
+                    end
+                    
+                    %generate allowed space for center location
+                    %for sphere in a box, this space will be a box
+                    okayCenterLoc = Box(obj.width - fillObj.width, ...
+                        obj.height - fillObj.height, obj.center);
+                    
+                    %check if sphere center falls within this space
+                    %MOEP
+            end
         end
         
         function deleteShape(obj)
@@ -48,7 +81,16 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
         end
     end
     
-    
+    methods (Static)
+        %function not implemented; will move objects back to their original
+        %location if "allowOverlap" is set to true
+        %MOEP do i need this?
+        function letOverlap(~, eventData) %first argument is class info?
+            obj = eventData.AffectedObject;
+            switch eventData.Source.Name
+            end
+        end
+    end
     
     
     
