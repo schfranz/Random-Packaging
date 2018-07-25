@@ -14,8 +14,9 @@ classdef (Abstract) ShapeInterface < handle
     %%VARIABLES
     %%PUBLIC%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     properties (SetObservable, AbortSet) % update will change entire shape
-        width               %width of the shape, i.e. the short end
         height              %height (long end of a shape, identical to width for cube and sphere)
+        width               %width of the shape, i.e. the medium end
+        depth               %depth of the shape, i.e. the short end
         center = [0,0,0];   %center point of shape
     end
     
