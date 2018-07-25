@@ -1,4 +1,4 @@
-classdef (Abstract) FilledShapeInterface < ShapeInterface
+classdef (Abstract) FillableShapeInterface < ShapeInterface
     %abstract class that describes a 3-D shape that is filled with another
     %   3-D shape
     %inherited properties:
