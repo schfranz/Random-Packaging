@@ -6,16 +6,26 @@ So far, nothing works, so don't try to use it.^^
 ## File Description
 
 ### Interfaces
+- FillShapeInterface.m: Abstract interface that defines properties of shapes that can fill objects that implement the FillableShapeInterface class.
+- FillableShapeInterface.m: Abstract interface that defines properties of fillable shapes. Is derived from ShapeInterface class because it is a Shape with extra functionality. Will have features from CanisterInterface class added to it soon.
 - ShapeInterface.m: Abstract interface that defines basic variables and functions each shape should have. Is derived from handle class to allow implementing class' constructors to add listeners.
-- CanisterInterface.m: Abstract interface that defines basic variables and functions each canister should have. Is derived from handle class to allow implementing class' constructors to add listeners. Will become obsolete soon because functionality will be moved to more general FilledShapeInterface class.
-- FilledShapeInterface.m: Abstract interface that defines properties of fillable shapes. Is derived from ShapeInterface class because it is a Shape with extra functionality. Will have features from CanisterInterface class added to it soon.
 
 ### Object Classes
-- Sphere.m: Implements ShapeInterface as a sphere.
+- Box.m: Implements ShapeInterface as a box.
 - Cylinder.m: Implements ShapeInterface as a cylinder.
-- cylCanister.m: Inherits from Cylinder and implements CanisterInterface as a cylindrical canister. Will be obsolete soon because functionality will be moved to more general FilledCanister class. 
-- FilledCylinder.m: Implements FilledShapeInterface as fillable cylinder and inherits from cylinder. Will have features from cylCanister class added to it soon.
+- FillSphere.m: Inherits from Sphere and implements FillShapeInterface as a spherical FillShape.
+- FillableBox.m: Inherits from Box and implements FillableShapeInterface as a box FillableShape.
+- Sphere.m: Implements ShapeInterface as a sphere.
 
 ### Testing
+Tests can be found in /testing:
 - testSphere.m: Simple testing script for Sphere class. Will be expanded to testing function.
 Will eventually add a full testing suite for all object classes.
+
+### Examples
+Examples can be found in folder /examples.
+- spheresInBox.m: shows an example of placing a bunch of monosized spheres into a box.
+
+### Other
+- .gitignore: Helps me keep my local folder clean. Will take out local files and only put .asv files MATLAB might make while running for final release.
+ 
