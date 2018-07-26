@@ -17,7 +17,11 @@ classdef testFillableBox < matlab.unittest.TestCase
         %check that illegal constructors fail
         %check that constructor with 1 argument fails
         function testConstructor1(testCase)
-            [~] = testCase.verifyError(@() FillableBox(2), 'MATLAB:minrhs');            
+            [~] = testCase.verifyError(@() FillableBox(1), 'MATLAB:minrhs');            
+        end
+        %check that constructor with 2 arguments fails
+        function testConstructor2(testCase)
+            [~] = testCase.verifyError(@() FillableBox(1,2), 'MATLAB:minrhs');            
         end
         %check that calls asking for too many output arguments fail
     end
