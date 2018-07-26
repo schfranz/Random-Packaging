@@ -1,3 +1,5 @@
+%TODO: post question about listener hierarchy on stackoverflow
+
 classdef FillableBox < Box & FillableShapeInterface %order determines which superclass constructor is used!
     %class that inherits from Box and implements FillableShapeInterface
     %FillableBox is a Box object that can be filled with a shape 
