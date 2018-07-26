@@ -31,24 +31,21 @@ classdef Sphere < ShapeInterface
                     addlistener(obj, 'radius', 'PostSet', @Sphere.updateProps);
                     addlistener(obj, 'diameter', 'PostSet', @Sphere.updateProps);
                 otherwise %set basic properties of single Sphere or array of Sphere objects
-                    m = size(diameter, 1);
-                    n = size(diameter, 2);
-                    obj(m,n) = Sphere;
-                    for i = 1:m
-                        for j = 1:n
-                            obj(i,j).diameter = diameter(i,j);
-                            obj(i,j).height = obj(i,j).diameter;
-                            obj(i,j).width = obj(i,j).diameter;
-                            obj(i,j).depth = obj(i,j).diameter;
-                            obj(i,j).radius = obj(i,j).diameter/2;
-                            obj(i,j).volume = 4/3 * pi * obj(i,j).radius^3;
-                            %listeners
-                            addlistener(obj(i,j), 'height', 'PostSet', @Sphere.updateProps);
-                            addlistener(obj(i,j), 'width', 'PostSet', @Sphere.updateProps);
-                            addlistener(obj(i,j), 'depth', 'PostSet', @Sphere.updateProps);
-                            addlistener(obj(i,j), 'radius', 'PostSet', @Sphere.updateProps);
-                            addlistener(obj(i,j), 'diameter', 'PostSet', @Sphere.updateProps);
-                        end
+                    numElemArray = numel(diameter);
+                    obj = repelem(obj, numElemArray, 1); %column vector
+                    for k = 1:numElemArray
+                        obj(k).diameter = diameter(k);
+                        obj(k).height = obj(k).diameter;
+                        obj(k).width = obj(k).diameter;
+                        obj(k).depth = obj(k).diameter;
+                        obj(k).radius = obj(k).diameter/2;
+                        obj(k).volume = 4/3 * pi * obj(k).radius^3;
+                        %listeners
+                        addlistener(obj(k), 'height', 'PostSet', @Sphere.updateProps);
+                        addlistener(obj(k), 'width', 'PostSet', @Sphere.updateProps);
+                        addlistener(obj(k), 'depth', 'PostSet', @Sphere.updateProps);
+                        addlistener(obj(k), 'radius', 'PostSet', @Sphere.updateProps);
+                        addlistener(obj(k), 'diameter', 'PostSet', @Sphere.updateProps);
                     end
             end
             
