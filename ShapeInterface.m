@@ -21,8 +21,11 @@ classdef (Abstract) ShapeInterface < handle
     end
     
     %%PROTECTED%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    properties (SetObservable, SetAccess = protected)
+        volume  %volume enclosed by the shape
+    end
+    
     properties (SetAccess = protected)
-        volume  %volume enclosed by the shape       
         shape   %shape type (cube, sphere, cylinder)
     end
     

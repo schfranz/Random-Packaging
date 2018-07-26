@@ -18,6 +18,7 @@ classdef Box < ShapeInterface
         %tempWidth  %last width before reset
         %tempDepth  %last depth before reset
         %tempCenter %last center before reset
+        %tempVolume %last volume before reset
     %%
     %%VARIABLES
     %%PUBLIC%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -56,6 +57,7 @@ classdef Box < ShapeInterface
             addlistener(obj, 'width', 'PreSet', @FillableBox.updateTempProps);
             addlistener(obj, 'depth', 'PreSet', @FillableBox.updateTempProps);
             addlistener(obj, 'center', 'PreSet', @FillableBox.updateTempProps);
+            addlistener(obj, 'volume', 'PreSet', @FillableBox.updateTempProps);
             %addlistener(obj, 'center', 'PostSet', @Box.updateLocation);
         end
     end
@@ -172,6 +174,8 @@ classdef Box < ShapeInterface
                     obj.tempDepth = obj.depth;
                 case 'center'
                     obj.tempCenter = obj.center;
+                case 'volume'
+                    obj.tempVolume = obj.volume;
             end
         end
         

@@ -43,10 +43,10 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
     %%CONSTRUCTOR%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     methods
         %constructor method
-        function obj = FillableBox(varargin)
+        function obj = FillableBox(varargin) %can call with 0, 3, or 4
             obj = obj@Box(varargin{:}); %call to superclass constructor
             
-            if (nargin > 3) %check 3
+            if (nargin > 4) %check 3
                 error(obj.errMessTooManyInputs)
             end
             
@@ -55,7 +55,8 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
                     obj.freeVolume = obj.volume; %check 
             end
             %listeners
-            addlistener(obj, 'allowOverlap', 'PostSet', @cylCanister.letOverlap); %check
+            addlistener(obj, 'volume', 'PostSet', @FillableBox.updateProps);
+            %addlistener(obj, 'allowOverlap', 'PostSet', @cylCanister.letOverlap); %check
         end
         
     end
@@ -122,6 +123,30 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
     end
     
     methods (Static)
+        %update function that responds to data update by user
+        function updateProps(~, eventData) %first argument is class info?
+            obj = eventData.AffectedObject;
+            switch eventData.Source.Name
+                case 'volume'
+                    obj.freeVolume = obj.freeVolume + (obj.volume - obj.tempVolume);
+                    %{
+                    %obj.volume = obj.height * obj.width * obj.depth;
+                    %obj.diagonal = 2*pdist([obj.center; (obj.center - ...
+                    %    [obj.depth/2, obj.width/2, obj.height/2])]);
+                    %@Box.updateProps; %ask on stackoverflow
+                    obj.height = obj.height;
+                    obj.freeVolume = obj.volume; %for now
+                case 'width'
+                    obj.volume = obj.height * obj.width * obj.depth;
+                    obj.diagonal = 2*pdist([obj.center; (obj.center - ...
+                        [obj.depth/2, obj.width/2, obj.height/2])]);
+                case 'depth'
+                    obj.volume = obj.height * obj.width * obj.depth;
+                    obj.diagonal = 2*pdist([obj.center; (obj.center - ...
+                        [obj.depth/2, obj.width/2, obj.height/2])]);
+                    %}
+            end
+        end
         %function not implemented; will move objects back to their original
         %location if "allowOverlap" is set to true
         %MOEP do i need this?
