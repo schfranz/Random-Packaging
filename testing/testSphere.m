@@ -6,16 +6,33 @@
 %Sphere
 classdef testSphere < matlab.unittest.TestCase
     
-    methods (Test)
-        %constructors
+    %{
+    properties
+        iAmSphere
+    end
+    %}
+    
+    methods(TestMethodSetup)
+        %sets up test method - do i need this?
+    end
+    
+    methods(TestMethodTeardown)
+        %test method "destructor" - do i need this?
+    end
+    
+    methods(Test)
+        %test constructors
         function testConstructorEmpty(testCase)
+            %testCase.iAmSphere = Sphere();
+            %testCase.verifyClass(testCase.iAmSphere, ?Sphere);
             iAmSphere = Sphere();
             testCase.verifyClass(iAmSphere, ?Sphere);
         end
         function testConstructor1(testCase)
             iAmSphere = Sphere(2);
             testCase.verifyClass(iAmSphere, ?Sphere);
-
+            %testCase.iAmSphere = Sphere(2);
+            %testCase.verifyClass(testCase.iAmSphere, ?Sphere);
         end
     end
     %{
