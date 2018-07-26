@@ -1,5 +1,8 @@
 %TODO:
 % - write constructor with radius
+% - change listener structure: directly listening to variables introduces a
+% ton of redundancy and is stupid. replace with actual events that are
+% triggered by proper set and get methods
 
 classdef Sphere < ShapeInterface
     %inherited properties:
@@ -21,6 +24,12 @@ classdef Sphere < ShapeInterface
             obj.shape = 'sphere';
             switch nargin
                 case 0 %no argument constructor
+                    %listeners
+                    addlistener(obj, 'height', 'PostSet', @Sphere.updateProps);
+                    addlistener(obj, 'width', 'PostSet', @Sphere.updateProps);
+                    addlistener(obj, 'depth', 'PostSet', @Sphere.updateProps);
+                    addlistener(obj, 'radius', 'PostSet', @Sphere.updateProps);
+                    addlistener(obj, 'diameter', 'PostSet', @Sphere.updateProps);
                 otherwise %set basic properties of single Sphere or array of Sphere objects
                     m = size(diameter, 1);
                     n = size(diameter, 2);
@@ -33,6 +42,12 @@ classdef Sphere < ShapeInterface
                             obj(i,j).depth = obj(i,j).diameter;
                             obj(i,j).radius = obj(i,j).diameter/2;
                             obj(i,j).volume = 4/3 * pi * obj(i,j).radius^3;
+                            %listeners
+                            addlistener(obj(i,j), 'height', 'PostSet', @Sphere.updateProps);
+                            addlistener(obj(i,j), 'width', 'PostSet', @Sphere.updateProps);
+                            addlistener(obj(i,j), 'depth', 'PostSet', @Sphere.updateProps);
+                            addlistener(obj(i,j), 'radius', 'PostSet', @Sphere.updateProps);
+                            addlistener(obj(i,j), 'diameter', 'PostSet', @Sphere.updateProps);
                         end
                     end
             end
@@ -40,13 +55,13 @@ classdef Sphere < ShapeInterface
             if (nargin >= 2) %sphere centered around provided origin
                 obj.center = center;
             end
-            %listeners
-            addlistener(obj, 'height', 'PostSet', @Sphere.updateProps);
-            addlistener(obj, 'width', 'PostSet', @Sphere.updateProps);
-            addlistener(obj, 'depth', 'PostSet', @Sphere.updateProps);
-            addlistener(obj, 'radius', 'PostSet', @Sphere.updateProps);
-            addlistener(obj, 'diameter', 'PostSet', @Sphere.updateProps);
-            %addlistener(obj, 'center', 'PostSet', @Sphere.updateLocation);
+% %             listeners
+% %             addlistener(obj, 'height', 'PostSet', @Sphere.updateProps);
+% %             addlistener(obj, 'width', 'PostSet', @Sphere.updateProps);
+% %             addlistener(obj, 'depth', 'PostSet', @Sphere.updateProps);
+% %             addlistener(obj, 'radius', 'PostSet', @Sphere.updateProps);
+% %             addlistener(obj, 'diameter', 'PostSet', @Sphere.updateProps);
+% %             addlistener(obj, 'center', 'PostSet', @Sphere.updateLocation);
         end
     end
         
