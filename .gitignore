@@ -14,3 +14,4 @@ ShapeInterface.asv
 Sphere.asv
 testFillableBox.asv
 testSphere.asv
+examples/spheresInBox.asv
