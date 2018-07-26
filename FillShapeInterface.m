@@ -15,12 +15,12 @@ classdef (Abstract) FillShapeInterface < ShapeInterface
         movable = true;         %true if a FillShape can be moved
         transpShape = false;    %true if a FillShape is transparent to other FillShapes, i.e. it is allowed to overlap
         transpWall = false;     %true if a FillShape is transparent to the wall of the surrounding Fillable object, i.e. it can stick out
-    
     end
     
     %%PROTECTED%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     properties (Access = protected)
         neighbors       %list of neighbors FillShape needs to be aware of
+        outerShape      %an object that implements FillableShapeInterface and contains the FillShape
     end
     
     %%
