@@ -10,7 +10,7 @@ classdef Sphere < ShapeInterface
         %depth      %diameter
         %center     %center coordinates     %default: [0,0,0]
         
-    properties (SetObservable)
+    properties (SetObservable, AbortSet)
         radius  %radius of sphere
         diameter  %diameter of sphere
     end
@@ -21,14 +21,22 @@ classdef Sphere < ShapeInterface
             obj.shape = 'sphere';
             switch nargin
                 case 0 %no argument constructor
-                otherwise %set basic properties of sphere
-                    obj.diameter = diameter;
-                    obj.height = obj.diameter;
-                    obj.width = obj.diameter;
-                    obj.depth = obj.diameter;
-                    obj.radius = obj.diameter/2;
-                    obj.volume = 4/3 * pi * obj.radius^3;
+                otherwise %set basic properties of single Sphere or array of Sphere objects
+                    m = size(diameter, 1);
+                    n = size(diameter, 2);
+                    obj(m,n) = Sphere;
+                    for i = 1:m
+                        for j = 1:n
+                            obj(i,j).diameter = diameter(i,j);
+                            obj(i,j).height = obj(i,j).diameter;
+                            obj(i,j).width = obj(i,j).diameter;
+                            obj(i,j).depth = obj(i,j).diameter;
+                            obj(i,j).radius = obj(i,j).diameter/2;
+                            obj(i,j).volume = 4/3 * pi * obj(i,j).radius^3;
+                        end
+                    end
             end
+            
             if (nargin >= 2) %sphere centered around provided origin
                 obj.center = center;
             end

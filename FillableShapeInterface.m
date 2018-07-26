@@ -12,7 +12,7 @@ classdef (Abstract) FillableShapeInterface < ShapeInterface
     %%
     %%VARIABLES
     %%PUBLIC%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    properties (SetObservable)
+    properties (SetObservable, AbortSet)
         nFillShapesExp = 10;    %number of FillShapes user expects to place
         iterDepthMove = 10;     %number of iterations for moving other objects when new object can't be placed
         iterDepthSurvGrid = 3;  %number of iterations for making the grid on an observation object finer

@@ -22,7 +22,7 @@ classdef Box < ShapeInterface
     %%
     %%VARIABLES
     %%PUBLIC%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    properties (SetObservable)
+    properties (SetObservable, AbortSet)
         diagonal  %body diagonal
     end
     
