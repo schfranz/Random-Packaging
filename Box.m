@@ -14,11 +14,22 @@ classdef Box < ShapeInterface
         %width      %medium side
         %depth      %shortest side
         %center     %center coordinates     %default: [0,0,0]
-        
+        %tempHeight %last height before reset
+        %tempWidth  %last width before reset
+        %tempDepth  %last depth before reset
+        %tempCenter %last center before reset
+    %%
+    %%VARIABLES
+    %%PUBLIC%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     properties (SetObservable)
         diagonal  %body diagonal
     end
     
+    %%PROTECTED%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    %%
+    %%FUNCTIONS
+    %%CONSTRUCTOR%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     methods
         %construtor method
         function obj = Box(height, width, depth, center)
@@ -41,6 +52,10 @@ classdef Box < ShapeInterface
             addlistener(obj, 'height', 'PostSet', @Box.updateProps);
             addlistener(obj, 'width', 'PostSet', @Box.updateProps);
             addlistener(obj, 'depth', 'PostSet', @Box.updateProps);
+            addlistener(obj, 'height', 'PreSet', @FillableBox.updateTempProps);
+            addlistener(obj, 'width', 'PreSet', @FillableBox.updateTempProps);
+            addlistener(obj, 'depth', 'PreSet', @FillableBox.updateTempProps);
+            addlistener(obj, 'center', 'PreSet', @FillableBox.updateTempProps);
             %addlistener(obj, 'center', 'PostSet', @Box.updateLocation);
         end
     end
@@ -142,6 +157,21 @@ classdef Box < ShapeInterface
                     obj.volume = obj.height * obj.width * obj.depth;
                     obj.diagonal = 2*pdist([obj.center; (obj.center - ...
                         [obj.depth/2, obj.width/2, obj.height/2])]);
+            end
+        end
+        
+        %update function that respond to data update by user
+        function updateTempProps(~, eventData) %first argument is class info?
+            obj = eventData.AffectedObject;
+            switch eventData.Source.Name
+                case 'height'
+                    obj.tempHeight = obj.height;
+                case 'width'
+                    obj.tempWidth = obj.width;
+                case 'depth'
+                    obj.tempDepth = obj.depth;
+                case 'center'
+                    obj.tempCenter = obj.center;
             end
         end
         
