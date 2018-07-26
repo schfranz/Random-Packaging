@@ -18,6 +18,7 @@ classdef (Abstract) FillableShapeInterface < ShapeInterface
         iterDepthSurvGrid = 3;  %number of iterations for making the grid on an observation object finer
         iterDepthSurvSize = 3;  %number of iterations for making an observation object bigger
         gravityOn = false;      %when true, will exert force towards negative z on all FillShapes
+        sequentialDrop = false; %when true, will drop FillShapes sequentially instead of all at once
         goAllIn = false;        %when true, recreates current setting and attempts to place all objects optimally to determine whether new object can be placed at all
     end
     

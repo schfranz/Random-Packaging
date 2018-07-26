@@ -20,6 +20,7 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
         %iterDepthSurvGrid  %making grid on observation object finer          %default: 3
         %iterDepthSurvSize  %making an observation object bigger %default: 3
         %gravityOn          %set to true to move all movable objects as close to negative z as possible  %default: false
+        %sequentialDrop     %when true, will drop FillShapes sequentially instead of all at once %default: false
         %goAllIn            %set to true to turn on gravity and figure out if object can placed   %default: false
         %allowedFillShapes = 'sphere';   %FillShapes that can be used (remove default later)
         %mixedShapes = false;        %boolean that is true if FillShapes are different (sizes or shapes)
