@@ -23,10 +23,6 @@ classdef Box < ShapeInterface
         %construtor method
         function obj = Box(height, width, depth, center)
             obj.shape = 'box';
-            addlistener(obj, 'height', 'PostSet', @Box.updateProps);
-            addlistener(obj, 'width', 'PostSet', @Box.updateProps);
-            addlistener(obj, 'depth', 'PostSet', @Box.updateProps);
-            %addlistener(obj, 'center', 'PostSet', @Box.updateLocation);
             switch nargin
                 case 0 %no argument constructor
                 otherwise %set basic properties of box
@@ -41,6 +37,11 @@ classdef Box < ShapeInterface
             if (nargin >= 4) %box centered around provided origin
                 obj.center = center;
             end
+            %listeners
+            addlistener(obj, 'height', 'PostSet', @Box.updateProps);
+            addlistener(obj, 'width', 'PostSet', @Box.updateProps);
+            addlistener(obj, 'depth', 'PostSet', @Box.updateProps);
+            %addlistener(obj, 'center', 'PostSet', @Box.updateLocation);
         end
     end
         

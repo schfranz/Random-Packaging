@@ -19,12 +19,6 @@ classdef Sphere < ShapeInterface
         %construtor method
         function obj = Sphere(diameter, center)
             obj.shape = 'sphere';
-            addlistener(obj, 'height', 'PostSet', @Sphere.updateProps);
-            addlistener(obj, 'width', 'PostSet', @Sphere.updateProps);
-            addlistener(obj, 'depth', 'PostSet', @Sphere.updateProps);
-            addlistener(obj, 'radius', 'PostSet', @Sphere.updateProps);
-            addlistener(obj, 'diameter', 'PostSet', @Sphere.updateProps);
-            %addlistener(obj, 'center', 'PostSet', @Sphere.updateLocation);
             switch nargin
                 case 0 %no argument constructor
                 otherwise %set basic properties of sphere
@@ -38,6 +32,13 @@ classdef Sphere < ShapeInterface
             if (nargin >= 2) %sphere centered around provided origin
                 obj.center = center;
             end
+            %listeners
+            addlistener(obj, 'height', 'PostSet', @Sphere.updateProps);
+            addlistener(obj, 'width', 'PostSet', @Sphere.updateProps);
+            addlistener(obj, 'depth', 'PostSet', @Sphere.updateProps);
+            addlistener(obj, 'radius', 'PostSet', @Sphere.updateProps);
+            addlistener(obj, 'diameter', 'PostSet', @Sphere.updateProps);
+            %addlistener(obj, 'center', 'PostSet', @Sphere.updateLocation);
         end
     end
         
