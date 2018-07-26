@@ -21,6 +21,7 @@ So far, nothing works, so don't try to use it.^^
 Tests can be found in /testing. To run a test enter runtests('FILENAME.m').
 - testSphere.m: Simple testing script for Sphere class. Will be expanded to testing function.
 Will eventually add a full testing suite for all object classes.
+- testFillableBox.m: Simple constructor tests for FillableBoxClass.
 
 ### Examples
 Examples can be found in folder /examples.
