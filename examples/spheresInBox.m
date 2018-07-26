@@ -1,16 +1,24 @@
 %script that handles random placement of spheres into a rectangular box
 
-%define box dimensions
-
-%define shape dimensions
-%   monosized spheres for now
-%   different sizes later
-%   different shapes later
-
-%define random center locations
+%define box dimensions: tall box with square base
+height = 2*173.275;
+width = 2*11.59;
+depth = 2*width;
 
 %make a FillableBox object to represent the canister
-%   call to constructor with intended number of FillShapes
+myBox = FillableBox(height, width, depth);
+
+%define shape dimensions (monosized spheres for now; different sizes/shapes later
+nSpheres = 400; %number of spheres
+totSphereVol = 0.525*(myBox.volume); %total volume we expect to fill
+radius = (totSphereVol*3/4/pi() / nSpheres)^(1/3); %radius of each sphere
+ %create array of Sphere objects with diameter and default center
+
+%update intended number of FillShapes in myBox
+myBox.nFillShapesExp = nSpheres; %maybe move to constructor
+
+%generate random center locations
+myBox.placeAllFillShapes()
 
 %start a loop to 
     %make FillSphere objects according to random center ...
