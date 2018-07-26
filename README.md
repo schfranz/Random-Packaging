@@ -18,7 +18,7 @@ So far, nothing works, so don't try to use it.^^
 - Sphere.m: Implements ShapeInterface as a sphere.
 
 ### Testing
-Tests can be found in /testing:
+Tests can be found in /testing. To run a test enter runtests('FILENAME.m').
 - testSphere.m: Simple testing script for Sphere class. Will be expanded to testing function.
 Will eventually add a full testing suite for all object classes.
 
