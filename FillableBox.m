@@ -73,11 +73,46 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
                     
                     %check if sphere center falls within this space
                     %MOEP
+                    %if there is a conflict, determine magnitude of force
+                    
+                    %if the FillShape is in a valid location, update list
+                    %of neighbors
+                        %check number of existing FillShapes
+                        %if less than 18, make sure FillShape is okay with
+                        %   there not being enough
+                        %add whatever neighbors are around (3 up, 3 down on
+                        %   x, y, z)
+                    %check distances to all neighbors
+                        %if distances are large enough for all nearest
+                        %   neighors, Fillshape has been placed
+                        %   successfully
+                            %update neighborlists for all surrounding Shapes
+                            %   (recursively if other Shapes have to knock
+                            %   Shapes off their lists)
+                            %return
+                        %if there is a conflict, determine magnitude of
+                        %   force
+                    %if there is a nonzero force (wall plus other
+                    %   FillShapes), determine magnitude and direction
+                        %if force points further into the wall, drop cones
+                        %   to check for more space further into the shape
+                        %if force points inwards, check target location
+                            %if more space, move there and go back to
+                            %   checking distances
+                            %if less space, drop cones and look elsewhere
+                    %if moving, and cone-dropping doesn't help, return to
+                    %   original location and move away from wall if there
+                    %   is a wall force and move neighbors if they are
+                    %   movable and can find better space
+                    %if neighbor moving is unsuccessful, declare sphere
+                    %unplaceable
             end
         end
         
         function deleteShape(obj)
-            
+            %check that object exists
+            %remove object from x, y, z lists
+            %remove object from neighbor lists of its own neighbors
         end
     end
     
