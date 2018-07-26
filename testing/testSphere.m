@@ -34,6 +34,12 @@ classdef testSphere < matlab.unittest.TestCase
             %testCase.iAmSphere = Sphere(2);
             %testCase.verifyClass(testCase.iAmSphere, ?Sphere);
         end
+        function testConstructorArray(testCase)
+            iAmSphere = Sphere(ones(3,1)*2);
+            for i = 1:length(iAmSphere)
+                testCase.verifyClass(iAmSphere(i), ?Sphere);
+            end
+        end
     end
     %{
     hm = Sphere(2);
