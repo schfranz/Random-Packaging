@@ -13,7 +13,12 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
         %center     %center coordinates     %default: [0,0,0]
         %diagonal   %body diagonal
         %from abstract class FillableShapeInterface:
-        %nFillShapesExp %number of FillShapes user expects to place    %default: 10
+        %nFillShapesExp     %number of FillShapes user expects to place    %default: 10
+        %iterDepthMove      %moving other objects when new object can't be placed %default: 10
+        %iterDepthSurvGrid  %making grid on observation object finer          %default: 3
+        %iterDepthSurvSize  %making an observation object bigger %default: 3
+        %gravityOn          %set to true to move all movable objects as close to negative z as possible  %default: false
+        %goAllIn            %set to true to turn on gravity and figure out if object can placed   %default: false
         %allowedFillShapes = 'sphere';   %FillShapes that can be used (remove default later)
         %mixedShapes = false;        %boolean that is true if FillShapes are different (sizes or shapes)
         %nFillShapes = 0;            %actual number of FillShapes present

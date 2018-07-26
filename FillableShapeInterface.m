@@ -12,8 +12,13 @@ classdef (Abstract) FillableShapeInterface < ShapeInterface
     %%
     %%VARIABLES
     %%PUBLIC%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    properties
-        nFillShapesExp = 10; %number of FillShapes user expects to place
+    properties (SetObservable)
+        nFillShapesExp = 10;    %number of FillShapes user expects to place
+        iterDepthMove = 10;     %number of iterations for moving other objects when new object can't be placed
+        iterDepthSurvGrid = 3;  %number of iterations for making the grid on an observation object finer
+        iterDepthSurvSize = 3;  %number of iterations for making an observation object bigger
+        gravityOn = false;      %when true, will exert force towards negative z on all FillShapes
+        goAllIn = false;        %when true, recreates current setting and attempts to place all objects optimally to determine whether new object can be placed at all
     end
     
     %%PROTECTED%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
