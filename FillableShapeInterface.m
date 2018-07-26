@@ -31,8 +31,9 @@ classdef (Abstract) FillableShapeInterface < ShapeInterface
     end
     
     properties (Hidden, GetAccess = protected)
-        errMessInvalidShape = 'This fill shape type is not supported \n';
+        errMessInvalidShape = 'This fill shape type is not supported';
         errMessLargeFillShape = 'The fill shape provided is too large for the canister';
+        errMessCantPlaceShape = 'Cannot place fill shape';
         warnMessNshapesIncr = ['Increasing the number of FillShapes present ' ...
             'beyond the specified number of expected FillShapes (nFillShapesExp) ' ...
             'may slow down placement of additional shapes. Consider increasing ' ...
