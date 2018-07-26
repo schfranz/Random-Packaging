@@ -156,7 +156,7 @@ classdef Box < ShapeInterface
         %}
     end
     
-    methods (Private) %private functions for exclusive use of this class
+    methods (Access = private) %private functions for exclusive use of this class
         %function that determines if a given number is on a line specified
         %in terms of the center of the line and its length (1-D!)
         function bool = isOnLine(number, center, length)
