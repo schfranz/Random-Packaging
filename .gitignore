@@ -12,4 +12,5 @@ FillShapeInterface.asv
 FillSphere.asv
 ShapeInterface.asv
 Sphere.asv
+testFillableBox.asv
 testSphere.asv
