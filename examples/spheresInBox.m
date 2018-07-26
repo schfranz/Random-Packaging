@@ -12,7 +12,8 @@ myBox = FillableBox(height, width, depth);
 nSpheres = 400; %number of spheres
 totSphereVol = 0.525*(myBox.volume); %total volume we expect to fill
 radius = (totSphereVol*3/4/pi() / nSpheres)^(1/3); %radius of each sphere
- %create array of Sphere objects with diameter and default center
+%create array of Sphere objects with diameter and default center
+sphereArray = Sphere(ones(nSpheres,1) * 2 * radius);
 
 %update intended number of FillShapes in myBox
 myBox.nFillShapesExp = nSpheres; %maybe move to constructor
