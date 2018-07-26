@@ -27,6 +27,14 @@ classdef (Abstract) ShapeInterface < handle
     end
     
     properties (Hidden, Access = protected)% better than (GetAccess = private) because subclasses can still access these
+        %variables that can hold temporary values for class vars
+        tempHeight
+        tempWidth
+        tempDepth
+        tempCenter
+        tempVolume
+        
+        %error messages and warnings
         errMessBadCenter = 'Invalid center coordinates';
         errMessBadCoord = 'Invalid coordinate input';
         errMessTooManyInputs = 'Too many input arguments';
