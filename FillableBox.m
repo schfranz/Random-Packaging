@@ -35,7 +35,9 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
         
     %needs to implement:
         %for FillableShapeInterface:
-        %canFillHere(obj)
+        %addShape(obj)              %function that adds a FillShape 
+        %deleteShape(obj)           %function that deletes a FillShape
+        %placeFillShapesRand(obj)   %function to randomly distribute FillShapes
         
     %%
     %%VARIABLES
@@ -49,19 +51,17 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
         function obj = FillableBox(varargin) %can call with 0, 3, or 4
             obj = obj@Box(varargin{:}); %call to superclass constructor
             
-            if (nargin > 4) %check 3
+            if (nargin > 4)
                 error(obj.errMessTooManyInputs)
             end
             
             switch nargin
                 case num2cell(1:3)
-                    obj.freeVolume = obj.volume; %check 
+                    obj.freeVolume = obj.volume;
             end
             %listeners
             addlistener(obj, 'volume', 'PostSet', @FillableBox.updateProps);
-            %addlistener(obj, 'allowOverlap', 'PostSet', @cylCanister.letOverlap); %check
         end
-        
     end
     
     methods
@@ -122,6 +122,12 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
             %check that object exists
             %remove object from x, y, z lists
             %remove object from neighbor lists of its own neighbors
+        end
+        
+        %place an array of FillShapes randomly
+        function placeFillShapesRand(obj)
+            %initialize random locations
+            
         end
     end
     
