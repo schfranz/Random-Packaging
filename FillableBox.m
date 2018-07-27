@@ -72,10 +72,10 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
                 'VariableNames', {'X', 'ID', 'FillShapeType'});
             obj.coordListY = table('Size', [0,3], ...
                 'VariableTypes', {'double', 'int16', 'cell'}, ...
-                'VariableNames', {'X', 'ID', 'FillShapeType'});
+                'VariableNames', {'Y', 'ID', 'FillShapeType'});
             obj.coordListZ = table('Size', [0,3], ...
                 'VariableTypes', {'double', 'int16', 'cell'}, ...
-                'VariableNames', {'X', 'ID', 'FillShapeType'});
+                'VariableNames', {'Z', 'ID', 'FillShapeType'});
             
             %listeners
             addlistener(obj, 'volume', 'PostSet', @FillableBox.updateProps);
@@ -186,14 +186,44 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
             end
             
             %copy intended original locations to shapeLocsOrig and assign IDs
-            if (isempty(obj.shapeLocsOrig))
+            %also insert new FillShapes into shapeLocs
+            if (isempty(obj.shapeLocsOrig) && isempty(obj.shapeLocs))
                 newLocs = table((1:numElem)', randLoc(:,1), randLoc(:,2), ...
                     randLoc(:,3), {FillShapeArray(:).shape}');
                 newLocs.Properties.VariableNames = obj.shapeLocsOrig.Properties.VariableNames;
                 obj.shapeLocsOrig = [obj.shapeLocsOrig; newLocs];
+                obj.shapeLocs = [obj.shapeLocs; obj.shapeLocsOrig];
             else
                 %TODO insert handling for additional FillShapes here
             end
+            
+            %populate x, y, z coordinate tables with sorted values
+            if (isempty(obj.coordListX) && isempty(obj.coordListY) && ...
+                    isempty(obj.coordListZ))
+                %X
+                newCoords = table(obj.shapeLocs.X, obj.shapeLocs.ID, ...
+                    obj.shapeLocs.FillShapeType);
+                newCoords.Properties.VariableNames = obj.coordListX.Properties.VariableNames;
+                obj.coordListX = [obj.coordListX; sortrows(newCoords, 'X')];
+                %Y
+                newCoords = table(obj.shapeLocs.Y, obj.shapeLocs.ID, ...
+                    obj.shapeLocs.FillShapeType);
+                newCoords.Properties.VariableNames = obj.coordListY.Properties.VariableNames;
+                obj.coordListY = [obj.coordListY; sortrows(newCoords, 'Y')];
+                %Z
+                newCoords = table(obj.shapeLocs.Z, obj.shapeLocs.ID, ...
+                    obj.shapeLocs.FillShapeType);
+                newCoords.Properties.VariableNames = obj.coordListZ.Properties.VariableNames;
+                obj.coordListZ = [obj.coordListZ; sortrows(newCoords, 'Z')];
+            else
+                %TODO implement handling for additional FillShapes here
+            end
+            
+            %set to filled
+            obj.isFilled = true;
+            
+            %
+            
         end
     end
     
