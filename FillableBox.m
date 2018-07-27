@@ -71,14 +71,16 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
             switch fillObj.shape
                 case 'sphere'
                     %check if sphere dimensions are too large
-                    if (fillObj.width > obj.width || fillObj.height > obj.height)
+                    if (fillObj.height > obj.height || fillObj.width > obj.width || ...
+                            fillObj.depth > obj.depth)
                         error(obj.errMessLargeFillShape)
                     end
                     
                     %generate allowed space for center location
                     %for sphere in a box, this space will be a box
-                    okayCenterLoc = Box(obj.width - fillObj.width, ...
-                        obj.height - fillObj.height, obj.center);
+                    okayCenterLoc = Box(obj.height - fillObj.height, ...
+                        obj.width - fillObj.width, obj.depth - fillObj.depth, ...
+                        obj.center);
                     
                     %check if sphere center falls within this space
                     %MOEP
@@ -125,9 +127,36 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
         end
         
         %place an array of FillShapes randomly
-        function placeFillShapesRand(obj)
-            %initialize random locations
+        function placeFillShapesRand(obj, FillShapeArray)
+            %check how many FillShapes are present and if they match the
+            %   expected number of FillShapes
+            numElem = numel(FillShapeArray);
+            if (numElem > obj.nFillShapesExp)
+                warning(obj.warnMessNshapesIncr)
+            end
             
+            %initialize random locations
+            randLoc = zeros(numElem, 3); %initialize random locations; columns are x, y, z
+            
+            %determine possible center locations and generate random location
+            for i = 1:numElem
+                checkIfValidFillShape(obj, FillShapeArray(i)) %compares class of FillShape object to list of allowed shapes
+                switch fillObj.shape
+                    case 'sphere'
+                        %check if sphere dimensions are too large
+                        if (FillShapeArray(i).width > obj.width || ...
+                                FillShapeArray(i).height > obj.height)
+                            error(obj.errMessLargeFillShape)
+                        end
+                        
+                        %generate allowed space for center location
+                        %for sphere in a box, this space will be a box
+                        okayCenterLoc = Box(obj.height - FillShapeArray(i).height, ...
+                            obj.width - FillShapeArray(i).width, ...
+                            obj.depth - FillShapeArray(i).depth, obj.center);
+                end
+                
+            end
         end
     end
     
