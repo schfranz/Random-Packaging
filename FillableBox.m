@@ -61,11 +61,21 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
             end
             
             %initialize empty variables
-            obj.shapeLocs = struct('ID', {}, 'X', {}, 'Y', {}, 'Z', {}, 'FillShapeType', {});
-            obj.shapeLocsOrig = struct('ID', {}, 'X', {}, 'Y', {}, 'Z', {}, 'FillShapeType', {});
-            obj.coordListX = struct('X', {}, 'ID', {}, 'FillShapeType', {});
-            obj.coordListY = struct('Y', {}, 'ID', {}, 'FillShapeType', {});
-            obj.coordListZ = struct('Z', {}, 'ID', {}, 'FillShapeType', {});
+            obj.shapeLocs = table('Size', [0,5], ...
+                'VariableTypes', {'string', 'double', 'double', 'double', 'string'}, ...
+                'VariableNames', {'ID', 'X', 'Y', 'Z', 'FillShapeType'});
+            obj.shapeLocsOrig = table('Size', [0,5], ...
+                'VariableTypes', {'string', 'double', 'double', 'double', 'string'}, ...
+                'VariableNames', {'ID', 'X', 'Y', 'Z', 'FillShapeType'});
+            obj.coordListX = table('Size', [0,3], ...
+                'VariableTypes', {'double', 'string', 'string'}, ...
+                'VariableNames', {'X', 'ID', 'FillShapeType'});
+            obj.coordListY = table('Size', [0,3], ...
+                'VariableTypes', {'double', 'string', 'string'}, ...
+                'VariableNames', {'X', 'ID', 'FillShapeType'});
+            obj.coordListZ = table('Size', [0,3], ...
+                'VariableTypes', {'double', 'string', 'string'}, ...
+                'VariableNames', {'X', 'ID', 'FillShapeType'});
             
             %listeners
             addlistener(obj, 'volume', 'PostSet', @FillableBox.updateProps);
@@ -176,7 +186,12 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
             end
             
             %copy intended original locations to shapeLocsOrig and assign IDs
-            
+            %{
+            if (isempty(obj.shapeLocsOrig))
+                obj.shapeLocsOrig(1).X = randLoc(:,1);
+                obj.shapeLocsOrig(1).Y = randLoc(:,2);
+                obj.shapeLocsOrig(1).Z = randLoc(:,3);
+            %}
             hm = 3;
         end
     end
