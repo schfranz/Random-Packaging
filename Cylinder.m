@@ -1,9 +1,11 @@
+%TODO: implement depth, make sure functions aren't messed up
 classdef Cylinder < ShapeInterface
     %inherited properties:
+        %depth      %bottom plane diameter, x
+        %width      %bottom plane diameter, y
+        %height     %height, z
         %volume     %volume of cylinder     %protected
         %shape      %cylinder               %protected
-        %width      %diameter
-        %height     %diameter
         %center     %center coordinates     %default: [0,0,0]
         
     properties (SetObservable)
@@ -12,7 +14,7 @@ classdef Cylinder < ShapeInterface
     
     methods
         %constructor method
-        function obj = Cylinder(width, height, center, varargin)
+        function obj = Cylinder(depth, width, height, center, varargin)
             obj.shape = 'cylinder';
             switch nargin
                 case 0 %no argument constructor
