@@ -52,11 +52,11 @@ classdef (Abstract) FillableShapeInterface < ShapeInterface
     %%FUNCTIONS
     %%ABSTRACT%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     methods (Abstract)
-        addShape(obj)       %function that adds a fill shape 
-        deleteShape(obj)    %function that deletes a fill shape
+        addShape(obj)       %function that adds a FillShape 
+        deleteShape(obj)    %function that deletes a FillShape
         %canFillHere(obj) %?
-        %dropEvenly(obj)     %function to evenly distribute fill shapes (not important rn)
-        %dropRandomly(obj)   %function to randomly distribute fill shapes
+        %dropEvenly(obj)     %function to evenly distribute FillShapes (not important rn)
+        placeFillShapesRand(obj)   %function to randomly distribute FillShapes
         %getSurfaceCoords(obj) %this should already exist as part of ShapeInterface
     end
     
