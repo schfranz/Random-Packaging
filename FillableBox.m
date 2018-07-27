@@ -59,6 +59,14 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
                 case num2cell(1:3)
                     obj.freeVolume = obj.volume;
             end
+            
+            %initialize empty variables
+            obj.shapeLocs = struct('ID', {}, 'X', {}, 'Y', {}, 'Z', {}, 'FillShapeType', {});
+            obj.shapeLocsOrig = struct('ID', {}, 'X', {}, 'Y', {}, 'Z', {}, 'FillShapeType', {});
+            obj.coordListX = struct('X', {}, 'ID', {}, 'FillShapeType', {});
+            obj.coordListY = struct('Y', {}, 'ID', {}, 'FillShapeType', {});
+            obj.coordListZ = struct('Z', {}, 'ID', {}, 'FillShapeType', {});
+            
             %listeners
             addlistener(obj, 'volume', 'PostSet', @FillableBox.updateProps);
         end
@@ -67,7 +75,7 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
     methods
         %add a shape to FillableBox
         function addShape(obj)
-            checkIfValidFillShape(obj, fillObj) %compares fillObj to list of allowed shapes
+            checkValidFillShape(obj, fillObj); %compares fillObj to list of allowed shapes
             switch fillObj.shape
                 case 'sphere'
                     %check if sphere dimensions are too large
@@ -140,23 +148,36 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
             
             %determine possible center locations and generate random location
             for i = 1:numElem
-                checkIfValidFillShape(obj, FillShapeArray(i)) %compares class of FillShape object to list of allowed shapes
-                switch fillObj.shape
+                checkValidFillShape(obj, FillShapeArray(i)); %compares class of FillShape object to list of allowed shapes
+                switch FillShapeArray(i).shape
                     case 'sphere'
                         %check if sphere dimensions are too large
-                        if (FillShapeArray(i).width > obj.width || ...
-                                FillShapeArray(i).height > obj.height)
+                        if (FillShapeArray(i).height > obj.height || ...
+                                FillShapeArray(i).width > obj.width || ...
+                                FillShapeArray(i).depth > obj.depth)
                             error(obj.errMessLargeFillShape)
                         end
                         
                         %generate allowed space for center location
-                        %for sphere in a box, this space will be a box
+                        %for sphere in a Box, this space will be a Box
                         okayCenterLoc = Box(obj.height - FillShapeArray(i).height, ...
                             obj.width - FillShapeArray(i).width, ...
                             obj.depth - FillShapeArray(i).depth, obj.center);
+                        
+                        %generate random location in that Box
+                        %formula for N random numbers in interval (a,b) is r = a + (b-a).*rand(N,1)
+                        randLoc(i,1) = (okayCenterLoc.center(1) - okayCenterLoc.height/2) + ...
+                            okayCenterLoc.height .* rand(1,1);
+                        randLoc(i,2) = (okayCenterLoc.center(2) - okayCenterLoc.width/2) + ...
+                            okayCenterLoc.width .* rand(1,1);
+                        randLoc(i,3) = (okayCenterLoc.center(3) - okayCenterLoc.depth/2) + ...
+                            okayCenterLoc.depth .* rand(1,1);
                 end
-                
             end
+            
+            %copy intended original locations to shapeLocsOrig and assign IDs
+            
+            hm = 3;
         end
     end
     
