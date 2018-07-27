@@ -31,9 +31,9 @@ classdef Sphere < ShapeInterface
                     addlistener(obj, 'radius', 'PostSet', @Sphere.updateProps);
                     addlistener(obj, 'diameter', 'PostSet', @Sphere.updateProps);
                 otherwise %set basic properties of single Sphere or array of Sphere objects
-                    numElemArray = numel(diameter);
-                    obj = repelem(obj, numElemArray, 1); %column vector
-                    for k = 1:numElemArray
+                    numElem = numel(diameter);
+                    obj = repelem(obj, numElem, 1); %column vector
+                    for k = 1:numElem
                         obj(k).diameter = diameter(k);
                         obj(k).height = obj(k).diameter;
                         obj(k).width = obj(k).diameter;
