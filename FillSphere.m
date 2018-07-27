@@ -14,11 +14,11 @@ classdef FillSphere < Sphere & FillShapeInterface %order determines which superc
         %radius     %radius of sphere
         %diameter   %diameter of sphere
         %from abstract class FillShapeInterface:
-        %movable = true;         %true if a FillShape can be moved
-        %transpShape = false;    %true if a FillShape is transparent to other FillShapes, i.e. it is allowed to overlap
-        %transpWall = false;     %true if a FillShape is transparent to the wall of the surrounding Fillable object, i.e. it can stick out
-        %neighbors       %list of neighbors FillShape needs to be aware of
-        %outerShape      %an object that implements FillableShapeInterface and contains the FillShape
+        %movable = true;        %true if a FillShape can be moved
+        %transpShape = false;   %true if a FillShape is transparent to other FillShapes, i.e. it is allowed to overlap
+        %transpWall = false;    %true if a FillShape is transparent to the wall of the surrounding Fillable object, i.e. it can stick out
+        %neighbors              %list of neighbors FillShape needs to be aware of
+        %outerShape             %an object that implements FillableShapeInterface and contains the FillShape
         
     %needs to implement:
         %for FillShapeInterface:
@@ -32,10 +32,38 @@ classdef FillSphere < Sphere & FillShapeInterface %order determines which superc
     %%
     %%FUNCTIONS
     %%CONSTRUCTOR%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    methods
+        %constructor method
+        function obj = FillSphere(varargin) %can call with 0, 1, or 2
+            obj = obj@Sphere(varargin{:}); %call to superclass constructor
+            
+            if (nargin > 2)
+                error(obj.errMessTooManyInputs)
+            end
+            
+            %{
+            switch nargin
+                case num2cell(1:3)
+                    obj.freeVolume = obj.volume; %check 
+            end
+            %}
+            
+            %listeners
+            addlistener(obj, 'movable', 'PostSet', @FillSphere.updateMobility);
+        end
+    end
     
-    
-    
-    
-    
-    
+    methods
+        %update list of neighbors
+        function updateNeighbors(obj)
+            
+            
+        end
+        
+        %check surroundings of FillSphere
+        function checkSurroundings(obj)
+            
+            
+        end
+    end
 end
