@@ -3,16 +3,16 @@
 %define box dimensions: tall box with square base
 height = 2*173.275;
 width = 2*11.59;
-depth = 2*width;
+depth = width;
 
-%make a FillableBox object to represent the canister
+%make a FillableBox object
 myBox = FillableBox(height, width, depth);
 
 %define shape dimensions (monosized spheres for now; different sizes/shapes later
 nSpheres = 400; %number of spheres
 totSphereVol = 0.525*(myBox.volume); %total volume we expect to fill
 radius = (totSphereVol*3/4/pi() / nSpheres)^(1/3); %radius of each sphere
-%create array of Sphere objects with diameter and default center
+%create array of FillSphere objects with diameter and default center
 sphereArray = FillSphere(ones(nSpheres,1) * 2 * radius);
 
 %update intended number of FillShapes in myBox
