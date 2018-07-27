@@ -14,9 +14,9 @@ classdef (Abstract) ShapeInterface < handle
     %%VARIABLES
     %%PUBLIC%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     properties (SetObservable, AbortSet) % update will change entire shape
-        height              %height (long end of a shape, identical to width for cube and sphere)
-        width               %width of the shape, i.e. the medium end
-        depth               %depth of the shape, i.e. the short end
+        depth               %depth of the shape, i.e. the short end, x
+        width               %width of the shape, i.e. the medium end, y
+        height              %height (long end of a shape, identical to width for cube and sphere), z
         center = [0,0,0];   %center point of shape
     end
     
@@ -31,9 +31,9 @@ classdef (Abstract) ShapeInterface < handle
     
     properties (Hidden, Access = protected)% better than (GetAccess = private) because subclasses can still access these
         %variables that can hold temporary values for class vars
-        tempHeight
-        tempWidth
         tempDepth
+        tempWidth
+        tempHeight
         tempCenter
         tempVolume
         

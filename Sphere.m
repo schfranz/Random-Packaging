@@ -6,12 +6,12 @@
 
 classdef Sphere < ShapeInterface
     %inherited properties:
-        %volume     %volume of sphere       %protected
-        %shape      %sphere                 %protected
         %height     %diameter
         %width      %diameter
         %depth      %diameter
         %center     %center coordinates     %default: [0,0,0]
+        %volume     %volume of sphere       %protected
+        %shape      %sphere                 %protected
         
     properties (SetObservable, AbortSet)
         radius  %radius of sphere
@@ -25,9 +25,9 @@ classdef Sphere < ShapeInterface
             switch nargin
                 case 0 %no argument constructor
                     %listeners
-                    addlistener(obj, 'height', 'PostSet', @Sphere.updateProps);
-                    addlistener(obj, 'width', 'PostSet', @Sphere.updateProps);
                     addlistener(obj, 'depth', 'PostSet', @Sphere.updateProps);
+                    addlistener(obj, 'width', 'PostSet', @Sphere.updateProps);
+                    addlistener(obj, 'height', 'PostSet', @Sphere.updateProps);
                     addlistener(obj, 'radius', 'PostSet', @Sphere.updateProps);
                     addlistener(obj, 'diameter', 'PostSet', @Sphere.updateProps);
                 otherwise %set basic properties of single Sphere or array of Sphere objects
@@ -35,15 +35,15 @@ classdef Sphere < ShapeInterface
                     obj = repelem(obj, numElem, 1); %column vector
                     for k = 1:numElem
                         obj(k).diameter = diameter(k);
-                        obj(k).height = obj(k).diameter;
-                        obj(k).width = obj(k).diameter;
                         obj(k).depth = obj(k).diameter;
+                        obj(k).width = obj(k).diameter;
+                        obj(k).height = obj(k).diameter;
                         obj(k).radius = obj(k).diameter/2;
                         obj(k).volume = 4/3 * pi * obj(k).radius^3;
                         %listeners
-                        addlistener(obj(k), 'height', 'PostSet', @Sphere.updateProps);
-                        addlistener(obj(k), 'width', 'PostSet', @Sphere.updateProps);
                         addlistener(obj(k), 'depth', 'PostSet', @Sphere.updateProps);
+                        addlistener(obj(k), 'width', 'PostSet', @Sphere.updateProps);
+                        addlistener(obj(k), 'height', 'PostSet', @Sphere.updateProps);
                         addlistener(obj(k), 'radius', 'PostSet', @Sphere.updateProps);
                         addlistener(obj(k), 'diameter', 'PostSet', @Sphere.updateProps);
                     end
@@ -115,34 +115,34 @@ classdef Sphere < ShapeInterface
         function updateProps(~, eventData) %first argument is class info?
             obj = eventData.AffectedObject;
             switch eventData.Source.Name
-                case 'height'
-                    obj.width = obj.height;
-                    obj.depth = obj.height;
-                    obj.radius = obj.height/2;
-                    obj.diameter = obj.height;
-                    obj.volume = 4/3 * pi * obj.radius^3;
-                case 'width'
-                    obj.height = obj.width;
-                    obj.depth = obj.width;
-                    obj.radius = obj.width/2;
-                    obj.diameter = obj.width;
-                    obj.volume = 4/3 * pi * obj.radius^3;
                 case 'depth'
-                    obj.height = obj.depth;
                     obj.width = obj.depth;
+                    obj.height = obj.depth;
                     obj.radius = obj.depth/2;
                     obj.diameter = obj.depth;
                     obj.volume = 4/3 * pi * obj.radius^3;
-                case 'radius'
-                    obj.height = obj.radius*2;
-                    obj.width = obj.height;
+                case 'width'
+                    obj.depth = obj.width;
+                    obj.height = obj.width;
+                    obj.radius = obj.width/2;
+                    obj.diameter = obj.width;
+                    obj.volume = 4/3 * pi * obj.radius^3;
+                case 'height'
                     obj.depth = obj.height;
+                    obj.width = obj.height;
+                    obj.radius = obj.height/2;
+                    obj.diameter = obj.height;
+                    obj.volume = 4/3 * pi * obj.radius^3;
+                case 'radius'
+                    obj.depth = obj.height;
+                    obj.width = obj.height;
+                    obj.height = obj.radius*2;
                     obj.diameter = obj.height;
                     obj.volume = 4/3 * pi * obj.radius^3;
                 case 'diameter'
-                    obj.height = obj.diameter;
-                    obj.width = obj.diameter;
                     obj.depth = obj.diameter;
+                    obj.width = obj.diameter;
+                    obj.height = obj.diameter;
                     obj.radius = obj.diameter/2;
                     obj.volume = 4/3 * pi * obj.radius^3;
             end

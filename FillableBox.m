@@ -7,12 +7,12 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
     
     %inherited properties:
         %from class Box:
+        %depth      %shortest side
+        %width      %medium side
+        %height     %longest side
+        %center     %center coordinates     %default: [0,0,0]
         %volume     %volume of box       %protected
         %shape      %box                 %protected
-        %height     %longest side
-        %width      %medium side
-        %depth      %shortest side
-        %center     %center coordinates     %default: [0,0,0]
         %diagonal   %body diagonal
         %from abstract class FillableShapeInterface:
         %nFillShapesExp     %number of FillShapes user expects to place    %default: 10
@@ -79,15 +79,15 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
             switch fillObj.shape
                 case 'sphere'
                     %check if sphere dimensions are too large
-                    if (fillObj.height > obj.height || fillObj.width > obj.width || ...
-                            fillObj.depth > obj.depth)
+                    if (fillObj.depth > obj.depth || fillObj.width > obj.width || ...
+                            fillObj.height > obj.height)
                         error(obj.errMessLargeFillShape)
                     end
                     
                     %generate allowed space for center location
                     %for sphere in a box, this space will be a box
-                    okayCenterLoc = Box(obj.height - fillObj.height, ...
-                        obj.width - fillObj.width, obj.depth - fillObj.depth, ...
+                    okayCenterLoc = Box(obj.depth - fillObj.depth, ...
+                        obj.width - fillObj.width, obj.height - fillObj.height, ...
                         obj.center);
                     
                     %check if sphere center falls within this space
@@ -152,26 +152,26 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
                 switch FillShapeArray(i).shape
                     case 'sphere'
                         %check if sphere dimensions are too large
-                        if (FillShapeArray(i).height > obj.height || ...
+                        if (FillShapeArray(i).depth > obj.depth || ...
                                 FillShapeArray(i).width > obj.width || ...
-                                FillShapeArray(i).depth > obj.depth)
+                                FillShapeArray(i).height > obj.height)
                             error(obj.errMessLargeFillShape)
                         end
                         
                         %generate allowed space for center location
                         %for sphere in a Box, this space will be a Box
-                        okayCenterLoc = Box(obj.height - FillShapeArray(i).height, ...
+                        okayCenterLoc = Box(obj.depth - FillShapeArray(i).depth, ...
                             obj.width - FillShapeArray(i).width, ...
-                            obj.depth - FillShapeArray(i).depth, obj.center);
+                            obj.height - FillShapeArray(i).height, obj.center);
                         
                         %generate random location in that Box
                         %formula for N random numbers in interval (a,b) is r = a + (b-a).*rand(N,1)
-                        randLoc(i,1) = (okayCenterLoc.center(1) - okayCenterLoc.height/2) + ...
-                            okayCenterLoc.height .* rand(1,1);
+                        randLoc(i,1) = (okayCenterLoc.center(1) - okayCenterLoc.depth/2) + ...
+                            okayCenterLoc.depth .* rand(1,1);
                         randLoc(i,2) = (okayCenterLoc.center(2) - okayCenterLoc.width/2) + ...
                             okayCenterLoc.width .* rand(1,1);
-                        randLoc(i,3) = (okayCenterLoc.center(3) - okayCenterLoc.depth/2) + ...
-                            okayCenterLoc.depth .* rand(1,1);
+                        randLoc(i,3) = (okayCenterLoc.center(3) - okayCenterLoc.height/2) + ...
+                            okayCenterLoc.height .* rand(1,1);
                 end
             end
             

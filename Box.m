@@ -8,15 +8,15 @@
 %%
 classdef Box < ShapeInterface
     %inherited properties:
+        %depth      %shortest side, x
+        %width      %medium side, y
+        %height     %longest side, z
+        %center     %center coordinates     %default: [0,0,0]
         %volume     %volume of box       %protected
         %shape      %box                 %protected
-        %height     %longest side
-        %width      %medium side
-        %depth      %shortest side
-        %center     %center coordinates     %default: [0,0,0]
-        %tempHeight %last height before reset
-        %tempWidth  %last width before reset
         %tempDepth  %last depth before reset
+        %tempWidth  %last width before reset
+        %tempHeight %last height before reset
         %tempCenter %last center before reset
         %tempVolume %last volume before reset
     %%
@@ -33,15 +33,15 @@ classdef Box < ShapeInterface
     %%CONSTRUCTOR%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     methods
         %construtor method
-        function obj = Box(height, width, depth, center)
+        function obj = Box(depth, width, height, center)
             obj.shape = 'box';
             switch nargin
                 case 0 %no argument constructor
                 otherwise %set basic properties of box
-                    obj.height = height;
-                    obj.width = width;
                     obj.depth = depth;
-                    obj.volume = obj.height * obj.width * obj.depth;
+                    obj.width = width;
+                    obj.height = height;
+                    obj.volume = obj.depth * obj.width * obj.height;
                     %check this
                     obj.diagonal = 2*pdist([obj.center; (obj.center - ...
                         [obj.depth/2, obj.width/2, obj.height/2])]);
@@ -50,12 +50,12 @@ classdef Box < ShapeInterface
                 obj.center = center;
             end
             %listeners
-            addlistener(obj, 'height', 'PostSet', @Box.updateProps);
-            addlistener(obj, 'width', 'PostSet', @Box.updateProps);
             addlistener(obj, 'depth', 'PostSet', @Box.updateProps);
-            addlistener(obj, 'height', 'PreSet', @FillableBox.updateTempProps);
-            addlistener(obj, 'width', 'PreSet', @FillableBox.updateTempProps);
+            addlistener(obj, 'width', 'PostSet', @Box.updateProps);
+            addlistener(obj, 'height', 'PostSet', @Box.updateProps);
             addlistener(obj, 'depth', 'PreSet', @FillableBox.updateTempProps);
+            addlistener(obj, 'width', 'PreSet', @FillableBox.updateTempProps);
+            addlistener(obj, 'height', 'PreSet', @FillableBox.updateTempProps);
             addlistener(obj, 'center', 'PreSet', @FillableBox.updateTempProps);
             addlistener(obj, 'volume', 'PreSet', @FillableBox.updateTempProps);
             %addlistener(obj, 'center', 'PostSet', @Box.updateLocation);
@@ -147,16 +147,16 @@ classdef Box < ShapeInterface
         function updateProps(~, eventData) %first argument is class info?
             obj = eventData.AffectedObject;
             switch eventData.Source.Name
-                case 'height'
-                    obj.volume = obj.height * obj.width * obj.depth;
+                case 'depth'
+                    obj.volume = obj.depth * obj.width * obj.height;
                     obj.diagonal = 2*pdist([obj.center; (obj.center - ...
                         [obj.depth/2, obj.width/2, obj.height/2])]);
                 case 'width'
-                    obj.volume = obj.height * obj.width * obj.depth;
+                    obj.volume = obj.depth * obj.width * obj.height;
                     obj.diagonal = 2*pdist([obj.center; (obj.center - ...
                         [obj.depth/2, obj.width/2, obj.height/2])]);
-                case 'depth'
-                    obj.volume = obj.height * obj.width * obj.depth;
+                case 'height'
+                    obj.volume = obj.depth * obj.width * obj.height;
                     obj.diagonal = 2*pdist([obj.center; (obj.center - ...
                         [obj.depth/2, obj.width/2, obj.height/2])]);
             end
@@ -166,12 +166,12 @@ classdef Box < ShapeInterface
         function updateTempProps(~, eventData) %first argument is class info?
             obj = eventData.AffectedObject;
             switch eventData.Source.Name
-                case 'height'
-                    obj.tempHeight = obj.height;
-                case 'width'
-                    obj.tempWidth = obj.width;
                 case 'depth'
                     obj.tempDepth = obj.depth;
+                case 'width'
+                    obj.tempWidth = obj.width;
+                case 'height'
+                    obj.tempHeight = obj.height;
                 case 'center'
                     obj.tempCenter = obj.center;
                 case 'volume'

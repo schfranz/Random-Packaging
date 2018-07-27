@@ -5,12 +5,12 @@ classdef FillSphere < Sphere & FillShapeInterface %order determines which superc
     
     %inherited properties:
         %from class Sphere:
+        %depth      %diameter
+        %width      %diameter
+        %height     %diameter
+        %center     %center coordinates     %default: [0,0,0]
         %volume     %volume of sphere       %protected
         %shape      %sphere                 %protected
-        %height     %diameter
-        %width      %diameter
-        %depth      %diameter
-        %center     %center coordinates     %default: [0,0,0]
         %radius     %radius of sphere
         %diameter   %diameter of sphere
         %from abstract class FillShapeInterface:

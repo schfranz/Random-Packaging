@@ -1,12 +1,12 @@
 %script that handles random placement of spheres into a rectangular box
 
 %define box dimensions: tall box with square base
+depth = 2*11.59;
+width = depth;
 height = 2*173.275;
-width = 2*11.59;
-depth = width;
 
 %make a FillableBox object
-myBox = FillableBox(height, width, depth);
+myBox = FillableBox(depth, width, height);
 
 %define shape dimensions (monosized spheres for now; different sizes/shapes later
 nSpheres = 400; %number of spheres
