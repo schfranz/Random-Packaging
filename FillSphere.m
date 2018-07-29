@@ -25,6 +25,7 @@ classdef FillSphere < Sphere & FillShapeInterface %order determines which superc
     %needs to implement:
         %for FillShapeInterface:
         %setID(obj) %update object's ID (only once in FillShapes' lifetime)
+        %initNeighbors(obj) %initialize list of neighbors
         %updateNeighbors(obj) %update list of neighbors as more objects are added
         %setOuterShape(obj) %updates information about surrounding shape
         %checkSurroundings(obj) %drops cones in all directions to see if there is more space elsewhere
@@ -61,6 +62,13 @@ classdef FillSphere < Sphere & FillShapeInterface %order determines which superc
         %set ID (only once in lifetime)
         function obj = setID(obj, ID)
             obj.ID = ID;
+        end
+        
+        %initialize list of neighbors
+        function obj = initNeighbors(obj, outerShape)
+            for i = 1:outerShape.nFillShapes
+                %get distance to all other shapes and walls
+            end
         end
         
         %update list of neighbors

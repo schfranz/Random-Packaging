@@ -30,6 +30,7 @@ classdef (Abstract) FillShapeInterface < ShapeInterface
     %%ABSTRACT%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
     methods (Abstract)
         setID(obj) %update object's ID (only once in FillShapes' lifetime)
+        initNeighbors(obj) %initialize list of neighbors
         updateNeighbors(obj) %update list of neighbors as more objects are added
         setOuterShape(obj) %updates information about surrounding shape
         checkSurroundings(obj) %drops cones in all directions to see if there is more space elsewhere
