@@ -66,7 +66,14 @@ classdef FillSphere < Sphere & FillShapeInterface %order determines which superc
         %update list of neighbors
         function obj = updateNeighbors(obj, outerShape)
             %nearest two neighbors in X
-            %locInList = outerShape.coordListX(outerShape.coordListX(:,2) == obj.ID);
+            %{
+            locInList = outerShape.coordListX(outerShape.coordListX.ID == obj.ID);
+            outerShape.coordListX((outerShape.coordListX.X < ...
+                (outerShape.coordListX.X(outerShape.coordListX.ID == obj.ID) + ...
+                obj.radius)) & (outerShape.coordListX.X > ...
+                (outerShape.coordListX.X(outerShape.coordListX.ID == obj.ID) - ...
+                obj.radius)),:)
+            %}
             
             %nearest two neighbors in Y
             

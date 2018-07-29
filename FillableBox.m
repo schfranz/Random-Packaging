@@ -184,7 +184,7 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
                             okayCenterLoc.height .* rand(1,1);
                         
                         %copy new center into FillShape array
-                        FillShapeArray(i).center = [randLoc(i,1), ...
+                        FillShapeArray(i,1).center = [randLoc(i,1), ...
                             randLoc(i,2), randLoc(i,3)];
                 end
             end
