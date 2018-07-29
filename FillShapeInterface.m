@@ -18,7 +18,7 @@ classdef (Abstract) FillShapeInterface < ShapeInterface
     end
     
     %%PROTECTED%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    properties (Access = protected)
+    properties (SetAccess = protected)
         neighbors       %list of neighbors FillShape needs to be aware of
         outerShape      %an object that implements FillableShapeInterface and contains the FillShape
     end
@@ -28,6 +28,7 @@ classdef (Abstract) FillShapeInterface < ShapeInterface
     %%ABSTRACT%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
     methods (Abstract)
         updateNeighbors(obj) %update list of neighbors as more objects are added
+        setOuterShape(obj) %updates information about surrounding shape
         checkSurroundings(obj) %drops cones in all directions to see if there is more space elsewhere
     
     end

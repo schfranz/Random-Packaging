@@ -60,6 +60,15 @@ classdef FillSphere < Sphere & FillShapeInterface %order determines which superc
             
         end
         
+        %update information about surrounding shape
+        function obj = setOuterShape(obj, outerShape)
+            switch outerShape.shape
+                case 'box'
+                    obj.outerShape = Box(outerShape.depth, outerShape.width, ...
+                        outerShape.height, outerShape.center);
+            end
+        end
+        
         %check surroundings of FillSphere
         function checkSurroundings(obj)
             
