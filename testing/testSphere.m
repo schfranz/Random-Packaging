@@ -41,6 +41,9 @@ classdef testSphere < matlab.unittest.TestCase
             end
         end
     end
+    
+    %test that all objects in array are standalone objects
+    
     %{
     hm = Sphere(2);
     hm = Sphere(2, [1,2,3]);
