@@ -226,9 +226,11 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
             %set to filled
             obj.isFilled = true;
             
-            %make FillShapes aware of their neighbors
+            %make FillShapes aware of the surrounding object and their neighbors
             %determine conflicts with other FillShapes and walls
+            conflicts = zeros(numElem, 1);
             for i = 1:numElem
+                FillShapeArray(i) = FillShapeArray(i).setOuterShape(obj);
             end
             
         end
