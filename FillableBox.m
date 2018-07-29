@@ -174,7 +174,7 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
                             obj.width - FillShapeArray(i).width, ...
                             obj.height - FillShapeArray(i).height, obj.center);
                         
-                        %generate random location in that Box
+                        %generate random location in Box
                         %formula for N random numbers in interval (a,b) is r = a + (b-a).*rand(N,1)
                         randLoc(i,1) = (okayCenterLoc.center(1) - okayCenterLoc.depth/2) + ...
                             okayCenterLoc.depth .* rand(1,1);
@@ -182,6 +182,10 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
                             okayCenterLoc.width .* rand(1,1);
                         randLoc(i,3) = (okayCenterLoc.center(3) - okayCenterLoc.height/2) + ...
                             okayCenterLoc.height .* rand(1,1);
+                        
+                        %copy new center into FillShape array
+                        FillShapeArray(i).center = [randLoc(i,1), ...
+                            randLoc(i,2), randLoc(i,3)];
                 end
             end
             
@@ -222,7 +226,10 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
             %set to filled
             obj.isFilled = true;
             
-            %
+            %make FillShapes aware of their neighbors
+            %determine conflicts with other FillShapes and walls
+            for i = 1:numElem
+            end
             
         end
     end
