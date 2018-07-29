@@ -225,13 +225,16 @@ classdef FillableBox < Box & FillableShapeInterface %order determines which supe
             
             %set to filled
             obj.isFilled = true;
+            obj.nFillShapes = numElem;
             %FillShapeArray = FillShapeArray.setOuterShape(obj);
             %make FillShapes aware of the surrounding object, their own IDs, ...
             %   and their neighbors 
             for i = 1:numElem
                 FillShapeArray(i,1) = FillShapeArray(i).setOuterShape(obj);
                 FillShapeArray(i,1) = FillShapeArray(i,1).setID(obj.shapeLocsOrig.ID(i));
-                FillShapeArray(i,1) = FillShapeArray(i,1).updateNeighbors(obj);
+                FillShapeArray(i,1) = FillShapeArray(i,1).initNeighbors(obj);
+                %FillShapeArray(i,1) = FillShapeArray(i,1).updateNeighbors(obj);
+                %make matrix that contains all distances between objects
             end
             
             %determine conflicts with other FillShapes and walls
